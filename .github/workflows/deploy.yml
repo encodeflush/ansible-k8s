@@ -9,7 +9,9 @@ jobs:
     - name: Checkout kubesoray repo
       uses: actions/checkout@v2
       with:
-        repository: kubernetes-sigs/kubespray 
+        repository: kubernetes-sigs/kubespray
+        ref: release-2.13 
+        path: $GITHUB_WORKSPACE/kubespray
     - name: Set up Python 3.8
       uses: actions/setup-python@v1
       with:
