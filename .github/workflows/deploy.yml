@@ -27,11 +27,11 @@ jobs:
       env:
         PROJECT_ID: ${{secrets.GCLOUD_PROJECT_ID}}
         APPLICATION_CREDENTIALS: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
-        K8S_ENV: ${{secrets.K8S_NEV}}
+        K8S_ENV: ${{secrets.K8S_ENV}}
         OBJ_URI: ${{secrets.OBJ_URL}}
         CLI: gsutil
       with:
-        args: cp $OBJ_URL ./inventory/$K8S_NEV/hosts.ini 
+        args: cp $OBJ_URL ./inventory/$K8S_ENV/hosts.ini 
      - name: Set ansible config secrets
       env:
         ANSIBLE_VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
