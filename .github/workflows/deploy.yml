@@ -6,8 +6,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
     - name: Checkout kubesoray repo
+      uses: actions/checkout@v2
       with:
         repository: https://github.com/kubernetes-sigs/kubespray.git
     - name: Set up Python 3.8
@@ -15,6 +15,7 @@ jobs:
       with:
         python-version: 3.8
     - name: Install dependencies
+      uses: actions/setup-python@v1
       with:
         tf_actions_working_dir: '.'
         tf_actions_comment: true
