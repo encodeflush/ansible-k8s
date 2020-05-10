@@ -30,7 +30,7 @@ jobs:
         OBJ_URI: ${{secrets.OBJ_URL}}
         CLI: gsutil
       with:
-        args: cp $OBJ_URI ./inventory/$K8S_ENV/hosts.ini 
+        args: info #cp $OBJ_URI ./inventory/$K8S_ENV/hosts.ini 
     - name: Set ansible config secrets
       env:
         ANSIBLE_VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
