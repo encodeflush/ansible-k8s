@@ -42,10 +42,10 @@ jobs:
         chmod 700 ~/.ssh/id_rsa
         eval $(ssh-agent -s)
         ssh-add ~/.ssh/id_rsa
-        #[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-        #echo "$ANSIBLE_VAULT_PASSWORD" > .ansible-vault-password
-        #- name: Run kubepsray playbook
-        #env:
-        #K8S_ENV: ${{secrets.K8S_ENV}}
-        #run: |
-        #ansible-playbook --vault-password-file .ansible-vault-password -i inventory/K8S_ENV/hosts.ini  --become --become-user=root cluster.yml
+        [[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+        echo "$ANSIBLE_VAULT_PASSWORD" > .ansible-vault-password
+    - name: Run kubepsray playbook
+      env:
+        K8S_ENV: ${{secrets.K8S_ENV}}
+      run: |
+        ansible-playbook --vault-password-file .ansible-vault-password -i inventory/K8S_ENV/hosts.ini  --become --become-user=root cluster.yml
