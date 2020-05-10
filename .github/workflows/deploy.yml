@@ -39,7 +39,8 @@ jobs:
         which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
         which sshpass || ( apt-get update -y && apt-get install sshpass -y )
         mkdir -p ~/.ssh
-        echo "$SSH_KEY" #> ~/.ssh/id_rsa
+        echo "$SSH_KEY" > ~/.ssh/id_rsa
+        cat ~/.ssh/id_rsa
         #sed -i -e "s#\\\\n#\n#g" ~/.ssh/id_rsa
         #chmod 700 ~/.ssh/id_rsa
         #eval $(ssh-agent -s)
