@@ -34,7 +34,7 @@ jobs:
     - name: Set ansible config secrets
       env:
         ANSIBLE_VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
-        DO_SSH_KEY: ${{ secrets.SSH_KEY }}
+        SSH_KEY: ${{ secrets.SSH_KEY }}
       run: |
         which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
         which sshpass || ( apt-get update -y && apt-get install sshpass -y )
