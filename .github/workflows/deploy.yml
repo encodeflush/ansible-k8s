@@ -16,19 +16,22 @@ jobs:
       with:
         python-version: 3.8
     - name: Install dependencies
+      env:
+        K8S_ENV: ${{secrets.K8s_NEV}}
       run: |
         pip install -r requirements.txt
         ansible-playbook mitogen.yml
-        cp -rfp inventory/sample inventory/labor
+        cp -rfp inventory/sample inventory/$K8S_ENV
     - name: Get ansible inventory 
       uses: actions-hub/gcloud@271.0.0
       env:
         PROJECT_ID: ${{secrets.GCLOUD_PROJECT_ID}}
         APPLICATION_CREDENTIALS: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
+        K8S_ENV: ${{secrets.K8S_NEV}}
         OBJ_URI: ${{secrets.OBJ_URL}}
         CLI: gsutil
       with:
-        args: gsutil cat $OBJ_URI  > ./inventory/labor/hosts.ini
+        args: gsutil cp $OBJ_URL ./inventory/$K8S_NEV/hosts.ini 
      - name: Set ansible config secrets
       env:
         ANSIBLE_VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
@@ -38,4 +41,3 @@ jobs:
         mkdir .ssh
         echo "$SSH_KEY" > .ssh/id_ansible
         chmod 600 .ssh/id_ansible
-     
