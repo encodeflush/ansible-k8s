@@ -19,7 +19,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        cd kubespray/ 
+        cd $GITHUB_WORKSPACE/kubespray 
         pip install -r requirements.txt
         ansible-playbook mitogen.yml
         cp -rfp inventory/sample inventory/labor
