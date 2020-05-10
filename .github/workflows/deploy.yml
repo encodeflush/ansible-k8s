@@ -20,7 +20,6 @@ jobs:
         K8S_ENV: ${{secrets.K8s_ENV}}
       run: |
         pip install -r requirements.txt
-        ansible-playbook mitogen.yml
         cp -rfp inventory/sample inventory/$K8S_ENV
     - name: Get ansible inventory 
       uses: actions-hub/gcloud@271.0.0
