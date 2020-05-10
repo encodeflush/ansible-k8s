@@ -32,7 +32,7 @@ jobs:
         CLI: gsutil
       with:
         args: cp $OBJ_URL ./inventory/$K8S_ENV/hosts.ini 
-     - name: Set ansible config secrets
+    - name: Set ansible config secrets
       env:
         ANSIBLE_VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
         DO_SSH_KEY: ${{ secrets.SSH_KEY }}
