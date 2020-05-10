@@ -17,7 +17,7 @@ jobs:
         python-version: 3.8
     - name: Install dependencies
       env:
-        K8S_ENV: ${{secrets.K8s_NEV}}
+        K8S_ENV: ${{secrets.K8s_ENV}}
       run: |
         pip install -r requirements.txt
         ansible-playbook mitogen.yml
@@ -41,3 +41,8 @@ jobs:
         mkdir .ssh
         echo "$SSH_KEY" > .ssh/id_ansible
         chmod 600 .ssh/id_ansible
+    - name: Run kubepsray playbook
+      env:
+        K8S_ENV: ${{secrets.K8S_ENV}}
+      run: |
+        ansible-playbook --vault-password-file .ansible-vault-password -i inventory/K8S_ENV/hosts.ini  --become --become-user=root cluster.yml
