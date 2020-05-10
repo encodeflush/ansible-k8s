@@ -20,17 +20,18 @@ jobs:
         K8S_ENV: ${{secrets.K8s_ENV}}
       run: |
         pip install -r requirements.txt
+        ansible-playbook -c local mitogen.yml
         cp -rfp inventory/sample inventory/$K8S_ENV
     - name: Get ansible inventory 
       uses: actions-hub/gcloud@master
       env:
-        PROJECT_ID: ${{secrets.GCLOUD_PROJECT_ID}}
-        APPLICATION_CREDENTIALS: ${{secrets.GOOGLE_APPLICATION_CREDENTIALS}}
-        K8S_ENV: ${{secrets.K8S_ENV}}
-        OBJ_URI: ${{secrets.OBJ_URL}}
+        PROJECT_ID: ${{ secrets.GCLOUD_PROJECT_ID }}
+        APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+        K8S_ENV: ${{ secrets.K8S_ENV }}
+        OBJ_URI: ${{ secrets.OBJ_URL }}
         CLI: gsutil
       with:
-        args: list #cp $OBJ_URI ./inventory/$K8S_ENV/hosts.ini 
+        args: cp $OBJ_URI ./inventory/$K8S_ENV/hosts.ini 
     - name: Set ansible config secrets
       env:
         ANSIBLE_VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
@@ -46,6 +47,7 @@ jobs:
         echo "$ANSIBLE_VAULT_PASSWORD" > .ansible-vault-password
     - name: Run kubepsray playbook
       env:
-        K8S_ENV: ${{secrets.K8S_ENV}}
+        K8S_ENV: ${{ secrets.K8S_ENV }}
       run: |
-        ansible-playbook --vault-password-file .ansible-vault-password -i inventory/K8S_ENV/hosts.ini  --become --become-user=root cluster.yml
+        echo "Hello"
+        #ansible-playbook --vault-password-file .ansible-vault-password -i inventory/K8S_ENV/hosts.ini  --become --become-user=root cluster.yml
