@@ -34,21 +34,18 @@ jobs:
     - name: Set ansible config secrets
       env:
         ANSIBLE_VAULT_PASSWORD: ${{ secrets.ANSIBLE_VAULT_PASSWORD }}
-        SSH_KEY: ${{ secrets.SSH_KEY }}
       run: |
         which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
         which sshpass || ( apt-get update -y && apt-get install sshpass -y )
         mkdir -p ~/.ssh
-        echo "$SSH_KEY" > ~/.ssh/id_rsa
-        cat ~/.ssh/id_rsa
-        #sed -i -e "s#\\\\n#\n#g" ~/.ssh/id_rsa
-        #chmod 700 ~/.ssh/id_rsa
-        #eval $(ssh-agent -s)
-        #ssh-add ~/.ssh/id_rsa
+        echo ${{ secrets.SSH_KEY }} > ~/.ssh/id_rsa
+        chmod 700 ~/.ssh/id_rsa
+        eval $(ssh-agent -s)
+        ssh-add ~/.ssh/id_rsa
         #[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
         #echo "$ANSIBLE_VAULT_PASSWORD" > .ansible-vault-password
-    - name: Run kubepsray playbook
-      env:
-        K8S_ENV: ${{secrets.K8S_ENV}}
-      run: |
-        ansible-playbook --vault-password-file .ansible-vault-password -i inventory/K8S_ENV/hosts.ini  --become --become-user=root cluster.yml
+        #- name: Run kubepsray playbook
+        #env:
+        #K8S_ENV: ${{secrets.K8S_ENV}}
+        #run: |
+        #ansible-playbook --vault-password-file .ansible-vault-password -i inventory/K8S_ENV/hosts.ini  --become --become-user=root cluster.yml
