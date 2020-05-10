@@ -38,7 +38,7 @@ jobs:
         which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
         which sshpass || ( apt-get update -y && apt-get install sshpass -y )
         mkdir -p ~/.ssh
-        echo ${{ secrets.SSH_KEY }} > ~/.ssh/id_rsa
+        echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
         chmod 700 ~/.ssh/id_rsa
         eval $(ssh-agent -s)
         ssh-add ~/.ssh/id_rsa
