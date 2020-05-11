@@ -33,7 +33,6 @@ jobs:
       with:
         args: cp $OBJ_URI ./inventory/$K8S_ENV/hosts.ini 
     - name: Set ansible config secrets
-      env:
       run: |
         which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
         mkdir -p ~/.ssh
