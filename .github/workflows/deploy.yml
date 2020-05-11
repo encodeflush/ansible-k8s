@@ -44,4 +44,4 @@ jobs:
         echo "${{ secrets.ANSIBLE_VAULT_PASSWORD }}" > .ansible-vault-password
     - name: Run kubepsray playbook
       run: |
-        ansible-playbook --vault-password-file .ansible-vault-password -i inventory/${{ secrets.K8S_ENV }}/hosts.ini --user core --become --become-user=root cluster.yml
+        ansible-playbook --vault-password-file .ansible-vault-password -i inventory/${{ secrets.K8S_ENV }}/hosts.ini --user ansible-ssh --become --become-user=root cluster.yml
